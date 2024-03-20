@@ -21,7 +21,7 @@ function renderProducts() {
 renderProducts();
 
 //cart array
-let carts = [];
+let carts = JSON.parse(localStorage.getItem("productCarts")) || [];
 
 //add to carts array
 function addtoCarts(id) {
@@ -35,8 +35,7 @@ function addtoCarts(id) {
     });
     console.log(carts);
   }
-  renderProductsCarts();
-  renderNumber();
+  updateCarts();
 }
 
 //render product carts
@@ -71,8 +70,7 @@ function changeQuantity(condition, id) {
       quantity,
     };
   });
-  renderProductsCarts();
-  renderNumber();
+  updateCarts();
 }
 
 //total price and cart number
@@ -91,8 +89,7 @@ function renderNumber() {
 //remove carts
 function removeCart(id) {
   carts = carts.filter((cart) => cart.id !== id);
-  renderProductsCarts();
-  renderNumber();
+  updateCarts();
 }
 
 //show hide
@@ -101,3 +98,12 @@ function show_hide() {
     showDiv.innerHTML = `<h5 class="text-center">No items in cart.</h5><hr>`;
   }
 }
+
+//update functions
+function updateCarts() {
+  renderProductsCarts();
+  renderNumber();
+  localStorage.setItem("productCarts", JSON.stringify(carts));
+}
+
+updateCarts();
