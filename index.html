@@ -37,7 +37,7 @@
               <h3 class="text-primary">Cart List</h3>
               <div class="d-flex align-items-center text-primary">
                 <i class="fa-solid fa-cart-shopping fs-3 me-2"></i>
-                <span class="fs-3">1</span>
+                <span class="badge bg-primary" id="totalCart">0</span>
               </div>
             </div>
             <table class="table table-hover">
@@ -51,6 +51,13 @@
               </thead>
               <tbody class="carts-table"></tbody>
             </table>
+            <div class="show">
+              <h5 class="text-center">No items in cart.</h5>
+            </div>
+            <div class="d-flex align-items-center justify-content-between text-primary">
+              <h5>Total Price -</h5>
+              <span class="fs-5 fw-bold" id="totalPrice">$ 000.00</span>
+            </div>
           </div>
         </div>
       </div>

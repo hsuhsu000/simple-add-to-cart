@@ -1,6 +1,8 @@
 //Render Products
 let productDiv = document.querySelector("#product-div");
 let cartsDiv = document.querySelector(".carts-table");
+let showDiv = document.querySelector(".show");
+
 function renderProducts() {
   products.forEach((product) => {
     productDiv.innerHTML += `<div class="col-12 col-lg-6 mb-4">
@@ -34,9 +36,12 @@ function addtoCarts(id) {
     console.log(carts);
   }
   renderProductsCarts();
+  renderNumber();
 }
 
+//render product carts
 function renderProductsCarts() {
+  showDiv.innerHTML = "";
   cartsDiv.innerHTML = "";
   carts.forEach((cart) => {
     cartsDiv.innerHTML += `<tr>
@@ -45,9 +50,10 @@ function renderProductsCarts() {
                   <td><i class="fa-solid fa-circle-minus fs-5 text-primary pt-3" onclick="changeQuantity('minus',${cart.id})" style="cursor:pointer"></i>
                   <span class="mx-2 fs-5 pt-3">${cart.quantity}</span>
                   <i class="fa-solid fa-circle-plus fs-5 text-primary pt-3" onclick="changeQuantity('plus',${cart.id})" style="cursor:pointer"></i></td>
-                  <td><i class="fa-solid fa-trash text-danger fs-5 pt-3" title="Remove" style="cursor:pointer"></i></td>
+                  <td><i class="fa-solid fa-trash text-danger fs-5 pt-3" onclick="removeCart(${cart.id})" title="Remove" style="cursor:pointer"></i></td>
                 </tr>`;
   });
+  show_hide();
 }
 
 function changeQuantity(condition, id) {
@@ -66,4 +72,32 @@ function changeQuantity(condition, id) {
     };
   });
   renderProductsCarts();
+  renderNumber();
+}
+
+//total price and cart number
+function renderNumber() {
+  let totalprice = 0,
+    totalcart = 0;
+  carts.forEach((cart) => {
+    totalprice += cart.price * cart.quantity;
+    totalcart += cart.quantity;
+  });
+
+  document.querySelector("#totalPrice").innerHTML = `${totalprice}`;
+  document.querySelector("#totalCart").innerHTML = `${totalcart}`;
+}
+
+//remove carts
+function removeCart(id) {
+  carts = carts.filter((cart) => cart.id !== id);
+  renderProductsCarts();
+  renderNumber();
+}
+
+//show hide
+function show_hide() {
+  if (!cartsDiv.innerHTML) {
+    showDiv.innerHTML = `<h5 class="text-center">No items in cart.</h5><hr>`;
+  }
 }
